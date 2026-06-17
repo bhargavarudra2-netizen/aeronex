@@ -1,0 +1,8 @@
+# Treat the bundled Edge Impulse SDK / BLE library as vendored so GitHub's
+# language statistics and diffs reflect the project's own source code.
+**/lib/** linguist-vendored
+**/edge-impulse-sdk/** linguist-generated
+
+*.cpp text
+*.h   text
+*.ino text
