@@ -123,6 +123,18 @@ void loop()
 {
     poll_IMU(); 
 
+    // Stream live telemetry for AeroNex dashboard (20 Hz)
+    static unsigned long last_telemetry_time = 0;
+    if (millis() - last_telemetry_time >= 50) {
+        last_telemetry_time = millis();
+        bool btn_pressed = (digitalRead(BUTTON_PIN) == LOW);
+        // data[0..2] is linear accel, data[3..5] is gyro
+        Serial.printf("{\"ax\":%.2f,\"ay\":%.2f,\"az\":%.2f,\"gx\":%.2f,\"gy\":%.2f,\"gz\":%.2f,\"btn\":%d}\r\n",
+            data[0] / 8192.0f, data[1] / 8192.0f, data[2] / 8192.0f,
+            data[3] / 16.4f, data[4] / 16.4f, data[5] / 16.4f,
+            btn_pressed ? 1 : 0);
+    }
+
     // Check Button State
     if (digitalRead(BUTTON_PIN) == HIGH) { 
         buffer_count = 0;
@@ -218,8 +230,12 @@ void process_logic(int new_reading) {
 
 // --- BLUETOOTH ACTIONS ---
 void execute_gesture_action(int gesture_index) {
+    const char* gesture_name = (gesture_index >= 0 && gesture_index < EI_CLASSIFIER_LABEL_COUNT)
+        ? ei_classifier_inferencing_categories[gesture_index] : "unknown";
+
+    Serial.printf("{\"event\":\"gesture\",\"name\":\"%s\",\"index\":%d}\r\n", gesture_name, gesture_index);
     if (gesture_index >= 0 && gesture_index < EI_CLASSIFIER_LABEL_COUNT) {
-        ei_printf("GESTURE DETECTED: %s\n", ei_classifier_inferencing_categories[gesture_index]);
+        ei_printf("GESTURE DETECTED: %s\n", gesture_name);
     }
 
     if (Keyboard.isConnected()) {

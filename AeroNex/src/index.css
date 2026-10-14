@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F4F5F9;
+  color: #16171B;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle dot-grid hero background as seen in the reference SaaS inspiration */
+.bg-subtle-grid {
+  background-image: radial-gradient(#DEE0E8 1.1px, transparent 1.1px);
+  background-size: 28px 28px;
+}
+
+/* Sleek minimalist scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D6E2;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B9BCD0;
+}
+
+/* Technical font utility */
+.font-mono-data {
+  font-family: 'IBM Plex Mono', monospace;
+  font-feature-settings: 'tnum' on, 'zero' on;
+}

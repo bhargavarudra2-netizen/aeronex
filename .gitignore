@@ -17,7 +17,13 @@
 *.bin
 *.elf
 
+# --- Node / Web App ---
+node_modules/
+dist/
+.vite/
+
 # --- OS cruft ---
 .DS_Store
 Thumbs.db
 desktop.ini
+
