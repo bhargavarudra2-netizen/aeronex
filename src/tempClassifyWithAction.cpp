@@ -73,7 +73,8 @@ eiSensors sensors[] =
 };
 
 // --- LOGIC SETTINGS ---
-const int BUTTON_PIN = 5;
+// Button pin moved from GPIO 5 (strapping pin) to GPIO 18
+const int BUTTON_PIN = 18; // Active LOW: connect button between GPIO 18 and GND
 int label_buffer[3] = {-1, -1, -1}; 
 int buffer_count = 0;              
 int CIRCLE_INDEX = 0;              
@@ -82,10 +83,12 @@ int IDLE_INDEX = 2;
 
 void setup()
 {
-    delay(100); 
     Serial.begin(115200);
-    while (!Serial);
-    Serial.println("Edge Impulse Gesture Keyboard\r\n");
+    delay(1000); 
+    Serial.println("\r\n========================================");
+    Serial.println("Edge Impulse Gesture Keyboard Starting...");
+    Serial.println("========================================");
+    Serial.flush();
 
     // 1. Init Bluetooth
     Keyboard.begin(); 
